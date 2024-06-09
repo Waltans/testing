@@ -4,7 +4,7 @@ public enum Type {
     /**
      * Стандартный модуль
      */
-    STANDART,
+    STANDARD,
 
     /**
      * Модуль проектного обучения

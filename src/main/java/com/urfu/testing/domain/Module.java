@@ -18,8 +18,9 @@ public class Module {
 
     private String title;
 
+    @Enumerated(EnumType.STRING)
     private Type type;
 
-    @OneToMany(mappedBy = "module",cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "module", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<EducationProgram> educationPrograms;
 }

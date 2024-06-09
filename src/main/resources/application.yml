@@ -1,19 +1,23 @@
 server:
-  port: 8070
-
+  port: 8050
 
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/test
     password: admin
     username: postgres
+    driver-class-name: org.postgresql.Driver
+  security:
+    user:
+      password: admin
+      name: admin
 
   jpa:
     hibernate:
-      ddl-auto: create
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    defer-datasource-initialization: true
+      ddl-auto: update
+    show-sql: true
 
   sql:
     init:
       mode: always
+

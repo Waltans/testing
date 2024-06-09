@@ -4,6 +4,7 @@ package com.urfu.testing.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.UUID;
@@ -32,14 +33,17 @@ public class EducationProgram {
      */
     private String cypher;
 
+
     /**
      * Уровень обучения
      */
+    @Enumerated(EnumType.STRING)
     private Level level;
 
     /**
      * Стандарт обучения
      */
+    @Enumerated(EnumType.STRING)
     private Standard standard;
 
     /**
@@ -62,7 +66,9 @@ public class EducationProgram {
     /**
      * Дата следующей аккредитации
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date accreditationTime;
+
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "education_program_id")

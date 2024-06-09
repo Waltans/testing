@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Education Programs</title>
+    <style>
+        .icon-dark {
+            color: #343a40;
+        }
+
+        .btn-delete:hover {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<h2 class="text-center">[[${pageTitle}]]</h2>
+
+<div class="my-3">
+    <form th:action="@{/educationPrograms/save}" method="post"
+          th:object="${educationProgram}"
+          style="max-width: 550px; margin: 0 auto">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="p-3">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="title">Title</label>
+                <div class="col-sm-9">
+                    <input type="text" th:field="*{title}" required minlength="2" maxlength="128" class="form-control"
+                           id="title"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="cypher">Cypher</label>
+                <div class="col-sm-9">
+                    <input type="text" th:field="*{cypher}" minlength="2" maxlength="256" class="form-control"
+                           id="cypher"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="head">Head</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="head" name="head" required>
+                        <option th:each="head : ${heads}" th:value="${head.id}" th:text="${head.fullName}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="module">Module</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="module" name="module" required>
+                        <option th:each="module : ${modules}" th:value="${module.id}"
+                                th:text="${module.title}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="institute">Institute</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="institute" name="institute" required>
+                        <option th:each="institute : ${institutes}" th:value="${institute.id}"
+                                th:text="${institute.title}"></option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="level">Level</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="level" th:field="*{level}" required>
+                        <option value="" disabled selected>Select level</option>
+                        <option value="MAGISTRACY">Магистр</option>
+                        <option value="BACCALAUREATE">Бакалавр</option>
+                        <option value="SPECIALITY">Специалист</option>
+                        <option value="APPLIED_BACCALAUREATE">Прикладной бакалавриат</option>
+                        <option value="POSTGRADUATE">Аспирант</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="standard">Standard</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="standard" th:field="*{standard}" required>
+                        <option value="" disabled selected>Select standard</option>
+                        <option value="SUOSS">СУОСС</option>
+                        <option value="SUT">СУТ</option>
+                        <option value="FGOS_VO">ФГОС ВО</option>
+                        <option value="FGOS_VPO">ФГОС ВПО</option>
+                        <option value="FGOS_3PP">ФГОС 3++</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="accreditationTime">Accreditation Time</label>
+                <div class="col-sm-9">
+                    <label for="accreditationTime">
+                        <input type="date" class="form-control" id="accreditationTime" th:field="*{accreditationTime}"
+                               required>
+                    </label>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <input type="submit" value="Save" class="btn btn-primary btn-sm mr-2"/>
+                <input type="button" value="Cancel" id="btnCancel" class="btn btn-secondary btn-sm"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

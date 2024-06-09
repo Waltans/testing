@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Education Programs</title>
+    <style>
+        .icon-dark {
+            color: #343a40;
+        }
+
+        .btn-delete:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div th:if="${educationProgram.size() > 0}" class="container mt-4">
+    <table class="table table-hover table-responsive-xl">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">uuid</th>
+            <th scope="col">Title</th>
+            <th scope="col">Cypher</th>
+            <th scope="col">Level</th>
+            <th scope="col">Standard</th>
+            <th scope="col">Institute</th>
+            <th scope="col">Head</th>
+            <th scope="col">accreditationTime</th>
+            <th scope="col">module</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="program : ${educationProgram}">
+            <th scope="row" th:text="${program.id}">ID</th>
+            <td th:text="${program.title}">Title</td>
+            <td th:text="${program.cypher}">Cypher</td>
+            <td th:text="${program.level}">Level</td>
+            <td th:text="${program.standard}">Standard</td>
+            <td th:text="${program.institute.title}">Institute</td>
+            <td th:text="${program.head.fullName}">Head</td>
+            <td th:text="${#dates.format(program.accreditationTime, 'yyyy-MM-dd')}">Accreditation Time</td>
+            <td th:text="${program.module.title}">Module</td>
+            <td>
+                <a th:href="@{'/educationPrograms/' + ${program.id} + '/edit'}" title="Редактировать программу"
+                   class="fas fa-edit icon-dark mr-2"></a>
+                <a href="#"
+                   onclick="showConfirmationModal(this.getAttribute('data-id'), this.getAttribute('data-title'))"
+                   th:attr="data-id=${program.id}, data-title=${program.title}"
+                   title="Удалить эту программу" class="fas fa-trash-alt icon-dark btn-delete"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="modal fade text-center" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <span id="confirmText"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="yesBtn" class="btn btn-danger">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script th:inline="javascript">
+    function showConfirmationModal(id, title) {
+        var modal = $('#confirmModal');
+        modal.find('#confirmText').text('Are you sure you want to delete the program "' + title + '"?');
+        $('#yesBtn').data('id', id); // Store the id in the button's data attribute
+        modal.modal('show');
+    }
+
+    $(document).ready(function () {
+        $('#yesBtn').click(function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/educationPrograms/' + id + '/delete',
+                type: 'DELETE'
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
