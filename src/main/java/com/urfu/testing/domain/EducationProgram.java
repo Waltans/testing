@@ -2,8 +2,7 @@ package com.urfu.testing.domain;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -15,6 +14,9 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EducationProgram {
     /**
      * идентификатор
@@ -71,6 +73,6 @@ public class EducationProgram {
 
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "education_program_id")
+    @JoinColumn(name = "module_id")
     private Module module;
 }

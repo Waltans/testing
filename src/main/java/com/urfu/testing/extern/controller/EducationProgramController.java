@@ -82,6 +82,9 @@ public class EducationProgramController {
             RedirectAttributes redirectAttributes) {
 
         try {
+            System.out.println(headId);
+            System.out.println(moduleId);
+            System.out.println(instituteId);
             Head head = headRepository.findById(headId)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid head ID"));
             Module module = moduleRepository.findById(moduleId)
