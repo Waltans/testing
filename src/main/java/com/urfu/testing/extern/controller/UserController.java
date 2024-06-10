@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * API с добавлением пользователй
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("user")
@@ -20,6 +23,12 @@ public class UserController {
     private final UserAssembler userAssembler;
 
 
+    /**
+     * Создание пользователей
+     *
+     * @param userDto - DTO пользователя
+     * @return - ResponseEntity с пользователем
+     */
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody UserDto userDto) {
         User user = userAssembler.toModel(userDto);

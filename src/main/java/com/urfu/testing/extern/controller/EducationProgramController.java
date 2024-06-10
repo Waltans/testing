@@ -5,7 +5,6 @@ import com.urfu.testing.domain.EducationProgram;
 import com.urfu.testing.domain.Head;
 import com.urfu.testing.domain.Institute;
 import com.urfu.testing.domain.Module;
-import com.urfu.testing.extern.repository.EducationProgramRepository;
 import com.urfu.testing.extern.repository.HeadRepository;
 import com.urfu.testing.extern.repository.InstituteRepository;
 import com.urfu.testing.extern.repository.ModuleRepository;
@@ -19,6 +18,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+/**
+ * Контроллер для взаимодействия с thymeleaf
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("educationPrograms")
@@ -28,7 +30,6 @@ public class EducationProgramController {
     private final ModuleRepository moduleRepository;
     private final InstituteRepository instituteRepository;
     private final HeadRepository headRepository;
-    private final EducationProgramRepository educationProgramRepository;
 
 
     @GetMapping
@@ -72,7 +73,16 @@ public class EducationProgramController {
         return "newEducationProgram";
     }
 
-
+    /**
+     * Метод исполняется из view newEducationProgram
+     *
+     * @param educationProgram
+     * @param headId
+     * @param moduleId
+     * @param instituteId
+     * @param redirectAttributes
+     * @return - view Все образовательные программы
+     */
     @PostMapping("/save")
     public String saveEducationProgram(
             @ModelAttribute("educationProgram") EducationProgram educationProgram,
@@ -82,6 +92,9 @@ public class EducationProgramController {
             RedirectAttributes redirectAttributes) {
 
         try {
+            System.out.println(headId);
+            System.out.println(moduleId);
+            System.out.println(instituteId);
             Head head = headRepository.findById(headId)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid head ID"));
             Module module = moduleRepository.findById(moduleId)
@@ -102,7 +115,12 @@ public class EducationProgramController {
 
     }
 
-
+    /**
+     * Удаление образовательной программы
+     *
+     * @param uuid - uuid
+     * @return - view
+     */
     @DeleteMapping("/{uuid}/delete")
     public String deleteEducationProgram(@PathVariable UUID uuid) {
         try {
